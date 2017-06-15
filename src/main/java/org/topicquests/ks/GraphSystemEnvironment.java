@@ -40,8 +40,6 @@ public class GraphSystemEnvironment extends RootEnvironment  {
 	public GraphSystemEnvironment() {
 		super("graph-props.xml", "logger.properties");
 		provider = ProviderEnvironment.getInstance();
-		if (provider == null)
-			provider = new ProviderEnvironment();
 		graphEnvironment = new GraphEnvironment(this);
 		stats = new StatisticsUtility();
 		database = graphEnvironment.getDatabase();
