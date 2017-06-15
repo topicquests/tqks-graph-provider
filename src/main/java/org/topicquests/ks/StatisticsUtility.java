@@ -31,7 +31,7 @@ public class StatisticsUtility {
 	private JSONObject data;
 	private final String
 		TOPIC_NODES				= "Topic Nodes",
-		FILE_NAME			 	= "TopicMapStatistics.json";
+		FILE_NAME			 	= "GraphStatistics.json";
 	
 	/**
 	 * 

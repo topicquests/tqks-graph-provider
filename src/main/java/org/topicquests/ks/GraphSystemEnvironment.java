@@ -18,6 +18,7 @@ package org.topicquests.ks;
 import org.topicquests.support.RootEnvironment;
 import org.topicquests.backside.kafka.KafkaBacksideEnvironment;
 import org.topicquests.ks.graph.GraphEnvironment;
+import org.topicquests.ks.graph.api.IGraphProvider;
 import org.topicquests.ks.kafka.KafkaProducer;
 import org.topicquests.node.provider.ProviderEnvironment;
 
@@ -31,17 +32,19 @@ public class GraphSystemEnvironment extends RootEnvironment  {
 	private KafkaBacksideEnvironment kafka;
 	private KafkaProducer kProducer;
 	private StatisticsUtility stats;
+	private IGraphProvider database;
 
 	/**
 	 * 
 	 */
 	public GraphSystemEnvironment() {
 		super("graph-props.xml", "logger.properties");
-		System.out.println("XXX "+getStringProperty("MergeListenerPropagate"));
 		provider = ProviderEnvironment.getInstance();
 		if (provider == null)
 			provider = new ProviderEnvironment();
+		graphEnvironment = new GraphEnvironment(this);
 		stats = new StatisticsUtility();
+		database = graphEnvironment.getDatabase();
 		try {
 			kafka = new KafkaBacksideEnvironment();
 			//kProducer = new KafkaProducer(kafka);
@@ -55,6 +58,10 @@ public class GraphSystemEnvironment extends RootEnvironment  {
 		logDebug("GraphEnvironment Started");
 	}
 	
+	public IGraphProvider getGraphProvider() {
+		return database;
+	}
+
 	
 	public KafkaProducer getkafkaProducer() {
 		return kProducer;

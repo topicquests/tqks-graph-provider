@@ -32,6 +32,10 @@ public class GraphEnvironment {
 		util = new GraphUtility(this, database);
 	}
 	
+	public ProviderEnvironment getProvider() {
+		return provider;
+	}
+	
 	public IGraphProvider getDatabase() {
 		return database;
 	}
