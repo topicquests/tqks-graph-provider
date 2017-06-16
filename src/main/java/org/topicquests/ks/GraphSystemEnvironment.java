@@ -41,9 +41,9 @@ public class GraphSystemEnvironment extends RootEnvironment  {
 		super("graph-props.xml", "logger.properties");
 		provider = ProviderEnvironment.getInstance();
 		graphEnvironment = new GraphEnvironment(this);
-		stats = new StatisticsUtility();
 		database = graphEnvironment.getDatabase();
 		try {
+			stats = StatisticsUtility.getInstance();
 			kafka = new KafkaBacksideEnvironment();
 			//kProducer = new KafkaProducer(kafka);
 		} catch (Exception e) {
@@ -77,11 +77,12 @@ public class GraphSystemEnvironment extends RootEnvironment  {
 		return stats;
 	}
 	
-	public void replaceStatisticsUtility(StatisticsUtility util) {
-		stats = util;
-	}
 
 	public void shutDown() {
-		stats.saveStats();
+		try {
+			stats.saveData();
+		} catch (Exception e) {
+			logError(e.getMessage(),e);
+		}
 	}
 }
